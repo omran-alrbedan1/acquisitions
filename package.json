@@ -4,7 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "dev":"node --watch src/index.js"
+    "dev": "node --watch src/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "build": "node -e \"import('./src/app.js').then(() => console.log('build: modules resolved'))\"",
+    "db:migrate": "drizzle-kit migrate",
+    "db:generate": "drizzle-kit generate",
+    "db:studio": "drizzle-kit studio"
   },
   "repository": {
     "type": "git",
@@ -19,7 +27,20 @@
   },
   "homepage": "https://github.com/omran-alrbedan1/acquisitions#readme",
   "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "@neon/config": "^1.14.8",
+    "@neon/env": "^2.1.11",
+    "@neondatabase/serverless": "^1.2.1",
     "dotenv": "^18.0.10",
-    "express": "^5.3.0"
+    "drizzle-orm": "^0.45.4",
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.7",
+    "express": "^5.3.0",
+    "pg": "^8.23.1",
+    "prettier": "^3.10.1"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.11"
   }
 }
