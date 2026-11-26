@@ -7,6 +7,15 @@ const app = express();
 
 app.use(express.json());
 
+const userColumns = {
+  id: users.id,
+  name: users.name,
+  email: users.email,
+  role: users.role,
+  created_at: users.created_at,
+  updated_at: users.updated_at,
+};
+
 app.get('/', (req, res) => {
   res.status(200).send('hello from acquisitions');
 });
@@ -27,13 +36,16 @@ app.get('/health', async (req, res) => {
 });
 
 app.get('/users', async (req, res) => {
-  const rows = await db.select().from(users).orderBy(users.id);
+  const rows = await db.select(userColumns).from(users).orderBy(users.id);
   res.status(200).json(rows);
 });
 
 app.post('/users', async (req, res) => {
-  const { name, email } = req.body;
-  const [user] = await db.insert(users).values({ name, email }).returning();
+  const { name, email, password, role } = req.body;
+  const [user] = await db
+    .insert(users)
+    .values({ name, email, password, role })
+    .returning(userColumns);
   res.status(201).json(user);
 });
 
